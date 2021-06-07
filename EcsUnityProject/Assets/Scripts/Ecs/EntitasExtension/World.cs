@@ -7,6 +7,9 @@ namespace Ecs.EntitasExtension
         private readonly WorldMatcher _matcher;
         private readonly Entitas.Context<Entity> _context;
 
+        internal WorldMatcher Matcher => _matcher;
+        internal Entitas.Context<Entity> Context => _context;
+
         public World(IComponentsInfo componentsInfo, string name = "World")
         {
             _context = CreateContext();

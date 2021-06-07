@@ -1,10 +1,14 @@
-// ReSharper disable UnusedTypeParameter
-
 namespace Ecs.EntitasExtension
 {
     public class Systems : ISystems
     {
+        private readonly World _world;
         private readonly Feature _feature = new Feature("Systems");
+
+        public Systems(World world)
+        {
+            _world = world;
+        }
 
         public void Initialize()
         {
@@ -28,6 +32,11 @@ namespace Ecs.EntitasExtension
 
         public void Add<T>(T system) where T : ISystem
         {
+            if (system is IReactSystem react)
+            {
+                _feature.Add(new ReactiveEntitasSystem<T>(_world.Context, react, _world.Matcher));
+            }
+            
             if (system is IInitializeSystem initialize)
             {
                 _feature.Add(new InitializeEntitasSystem<T>(initialize));
@@ -47,66 +56,6 @@ namespace Ecs.EntitasExtension
             {
                 _feature.Add(new TearDownEntitasSystem<T>(destroy));
             }
-        }
-    }
-
-    internal class InitializeEntitasSystem<T> : Entitas.IInitializeSystem
-    {
-        private readonly IInitializeSystem _system;
-
-        public InitializeEntitasSystem(IInitializeSystem system)
-        {
-            _system = system;
-        }
-
-        public void Initialize()
-        {
-            _system.Initialize();
-        }
-    }
-
-    internal class ExecuteEntitasSystem<T> : Entitas.IExecuteSystem
-    {
-        private readonly IUpdateSystem _system;
-
-        public ExecuteEntitasSystem(IUpdateSystem system)
-        {
-            _system = system;
-        }
-
-        public void Execute()
-        {
-            _system.Update();
-        }
-    }
-
-    internal class CleanupEntitasSystem<T> : Entitas.ICleanupSystem
-    {
-        private readonly ILateUpdateSystem _system;
-
-        public CleanupEntitasSystem(ILateUpdateSystem system)
-        {
-            _system = system;
-        }
-
-        public void Cleanup()
-        {
-            _system.LateUpdate();
-        }
-    }
-
-    internal class TearDownEntitasSystem<T> : Entitas.ITearDownSystem
-    {
-        private readonly IDestroySystem _system;
-
-        public TearDownEntitasSystem(IDestroySystem system)
-        {
-            _system = system;
-        }
-
-        public void TearDown()
-        {
-            _system.Destroy();
         }
     }
 }

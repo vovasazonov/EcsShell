@@ -8,19 +8,19 @@ namespace Ecs.EntitasExtension
         {
             _info = info;
         }
-        
-        void IEntity.Destroy()
+
+        public new void Destroy()
         {
             base.Destroy();
         }
 
-        ref T IEntity.GetComponent<T>()
+        public ref T GetComponent<T>() where T : struct
         {
             int index = _info.GetIndex<T>();
             return ref GetByIndex<T>(index).Value;
         }
 
-        void IEntity.ReplaceComponent<T>(T component)
+        public void ReplaceComponent<T>(T component) where T : struct
         {
             int index = _info.GetIndex<T>();
             var storageComponent = (ComponentShell<T>) CreateComponent(index, typeof(ComponentShell<T>));
@@ -28,14 +28,14 @@ namespace Ecs.EntitasExtension
             base.ReplaceComponent(index, storageComponent);
         }
 
-        void IEntity.RemoveComponent<T>()
+        public void RemoveComponent<T>() where T : struct
         {
             int index = _info.GetIndex<T>();
             GetByIndex<T>(index).Value = default;
             RemoveComponent(index);
         }
 
-        bool IEntity.ContainsComponent<T>()
+        public bool ContainsComponent<T>() where T : struct
         {
             int index = _info.GetIndex<T>();
             return HasComponent(index);
