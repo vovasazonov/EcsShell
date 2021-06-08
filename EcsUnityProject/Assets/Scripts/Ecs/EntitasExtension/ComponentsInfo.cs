@@ -26,7 +26,6 @@ namespace Ecs.EntitasExtension
             }
         }
 
-        public bool ContainsIndex<T>() where T : struct => _componentByIndex.ContainsKey(typeof(ComponentShell<T>));
         public int GetIndex<T>() where T : struct => _componentByIndex[typeof(ComponentShell<T>)];
         public int Total { get; }
         public string[] Names { get; }

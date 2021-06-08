@@ -11,8 +11,6 @@ namespace Ecs.EntitasExtension
             _group = group;
         }
 
-        public int Count => _group.count;
-
         public IEnumerator<IEntity> GetEnumerator()
         {
             return _group.GetEnumerator();
