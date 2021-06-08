@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.nroma.ecsshell": {
+      "version": "file:EcsShell",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.collab-proxy": {
       "version": "1.3.9",
       "depth": 0,

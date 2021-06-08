@@ -1,0 +1,22 @@
+{
+  "name": "com.nroma.ecsshell",
+  "version": "1.0.0",
+  "displayName": "EcsShell",
+  "description": "This is an shell for ecs frameworks",
+  "unity": "2021.1",
+  "unityRelease": "2f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {
+    
+ },
+ "keywords": [
+    
+  ],
+  "author": {
+    "name": "Nroma",
+    "email": "futureNroma@yandex.ru",
+    "url": ""
+  }
+}
