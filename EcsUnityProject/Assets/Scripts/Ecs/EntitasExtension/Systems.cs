@@ -34,9 +34,20 @@ namespace Ecs.EntitasExtension
         {
             if (system is IReactSystem react)
             {
-                _feature.Add(new ReactiveEntitasSystem<T>(_world.Context, react, _world.Matcher));
+                Entitas.ICollector<Entity> collector;
+                Entitas.IMatcher<Entity> matcher = ((Matcher) react.Matcher.Invoke(_world.Matcher)).GetMatcher();
+                if (system is IEventSystem)
+                {
+                    collector = Entitas.CollectorContextExtension.CreateCollector(_world.Context, Entitas.TriggerOnEventMatcherExtension.Added(matcher));
+                }
+                else
+                {
+                    collector = _world.Context.CreateCollector(matcher);
+                }
+
+                _feature.Add(new ReactiveEntitasSystem<T>(react, collector));
             }
-            
+
             if (system is IInitializeSystem initialize)
             {
                 _feature.Add(new InitializeEntitasSystem<T>(initialize));

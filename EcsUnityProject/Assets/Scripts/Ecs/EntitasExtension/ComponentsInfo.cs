@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace Ecs.EntitasExtension
 {
-    public sealed class ComponentsInfo : IComponentsInfo
+    internal sealed class ComponentsInfo : IComponentsInfo
     {
         private readonly Dictionary<Type, int> _componentByIndex;
-
-        public ComponentsInfo(IProjectComponents components)
+        
+        public ComponentsInfo(IEnumerable<Type> components)
         {
-            Types = components.Components.ToArray();
+            Types = components.ToArray();
             Total = Types.Length;
             Names = Types.Select(type =>
             {
@@ -26,6 +26,7 @@ namespace Ecs.EntitasExtension
             }
         }
 
+        public bool ContainsIndex<T>() where T : struct => _componentByIndex.ContainsKey(typeof(ComponentShell<T>));
         public int GetIndex<T>() where T : struct => _componentByIndex[typeof(ComponentShell<T>)];
         public int Total { get; }
         public string[] Names { get; }

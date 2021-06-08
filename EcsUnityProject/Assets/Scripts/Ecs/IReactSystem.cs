@@ -2,9 +2,8 @@
 
 namespace Ecs
 {
-    public interface IReactSystem : ISystem
+    public interface IReactSystem : IUpdateSystem
     {
         public Func<IWorldMatcher, IMatcher> Matcher { get; }
-        public void React();
     }
 }
