@@ -8,6 +8,7 @@ namespace Ecs.EntitasExtension
         public Systems(World world)
         {
             _world = world;
+            _world.ProjectEcsInfo.InitDefaultSystems(_world, this);            
         }
 
         public void Initialize()

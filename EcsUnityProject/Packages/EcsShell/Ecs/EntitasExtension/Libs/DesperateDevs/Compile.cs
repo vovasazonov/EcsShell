@@ -1,4 +1,4 @@
-﻿namespace DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor {
+﻿namespace Ecs.EntitasExtension.Libs.DesperateDevs {
 
     class Compile {
     }

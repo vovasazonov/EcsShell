@@ -3,14 +3,29 @@ using System.Collections.Generic;
 
 namespace Ecs.EntitasExtension
 {
-    public abstract class ProjectEcsInfo : IProjectEcsInfo
+    public abstract class ProjectEcsInfo
     {
         private readonly HashSet<Type> _components = new HashSet<Type>();
         private readonly List<Func<IWorld, ISystem>> _eventSystems = new List<Func<IWorld, ISystem>>();
-        
-        public IComponentsInfo ComponentsInfo => new ComponentsInfo(_components);
-        
-        public void InitEventSystems(IWorld world, ISystems systems)
+        private readonly List<Func<IWorld, ISystem>> _frameSystems = new List<Func<IWorld, ISystem>>();
+
+        internal IComponentsInfo ComponentsInfo => new ComponentsInfo(_components);
+
+        internal void InitDefaultSystems(IWorld world, ISystems systems)
+        {
+            InitFrameSystems(world, systems);
+            InitEventSystems(world, systems);
+        }
+
+        private void InitFrameSystems(IWorld world, ISystems systems)
+        {
+            foreach (var frameSystem in _frameSystems)
+            {
+                systems.Add(frameSystem.Invoke(world));
+            }
+        }
+
+        private void InitEventSystems(IWorld world, ISystems systems)
         {
             foreach (var eventSystem in _eventSystems)
             {
@@ -18,15 +33,21 @@ namespace Ecs.EntitasExtension
             }
         }
 
-        protected void Init<T>(bool isEvent = false) where T : struct
+        protected void Init<T>() where T : struct
         {
             var type = typeof(ComponentShell<T>);
             _components.Add(type);
+            object[] attributes = type.GetCustomAttributes(false);
 
-            if (isEvent)
+            foreach (FrameAttribute attribute in attributes)
+            {
+                _frameSystems.Add(world => new HandleFrameComponentSystem<T>(world, attribute.IsDestroyEntity));
+            }
+
+            foreach (EventAttribute attribute in attributes)
             {
                 Init<ListenerComponent<T>>();
-                _eventSystems.Add(world => new EventSystem<T>(world));
+                _eventSystems.Add(world => new HandleEventComponentSystem<T>(world));
             }
         }
     }

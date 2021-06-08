@@ -6,12 +6,16 @@ namespace Ecs.EntitasExtension
     {
         private readonly WorldMatcher _matcher;
         private readonly Entitas.Context<Entity> _context;
+        private readonly ProjectEcsInfo _projectEcsInfo;
 
         internal WorldMatcher Matcher => _matcher;
         internal Entitas.Context<Entity> Context => _context;
+        internal ProjectEcsInfo ProjectEcsInfo => _projectEcsInfo;
 
-        public World(IComponentsInfo componentsInfo, string name = "World")
+        public World(ProjectEcsInfo projectEcsInfo, string name = "World")
         {
+            IComponentsInfo componentsInfo = projectEcsInfo.ComponentsInfo;
+            _projectEcsInfo = projectEcsInfo;
             _context = CreateContext();
             _matcher = new WorldMatcher(componentsInfo);
 
