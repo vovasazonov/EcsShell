@@ -2,12 +2,12 @@
 {
     public interface IEntity
     {
-        T GetComponent<T>() where T : struct;
-        void ReplaceComponent<T>(T component) where T : struct;
-        void RemoveComponent<T>() where T : struct;
-        bool ContainsComponent<T>() where T : struct;
-        void RegisterListenerComponent<T>(IComponentListener<T> listener) where T : struct;
-        void UnregisterListenerComponent<T>(IComponentListener<T> listener) where T : struct;
+        TComponent Get<TComponent>() where TComponent : struct;
+        void Replace<TComponent>(TComponent component) where TComponent : struct;
+        void Remove<TComponent>() where TComponent : struct;
+        bool Contains<TComponent>() where TComponent : struct;
+        void RegisterListener<TComponent>(IComponentListener<TComponent> listener) where TComponent : struct;
+        void UnregisterListener<TComponent>(IComponentListener<TComponent> listener) where TComponent : struct;
         void Destroy();
     }
 }

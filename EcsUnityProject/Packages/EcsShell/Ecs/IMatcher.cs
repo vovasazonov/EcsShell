@@ -2,7 +2,7 @@ namespace Ecs
 {
     public interface IMatcher
     {
-        IMatcher Has<T>() where T : struct;
-        IMatcher None<T>() where T : struct;
+        IMatcher Has<TComponent>() where TComponent : struct;
+        IMatcher None<TComponent>() where TComponent : struct;
     }
 }

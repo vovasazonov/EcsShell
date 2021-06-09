@@ -2,6 +2,6 @@
 {
     public interface IWorldMatcher
     {
-        IMatcher Has<T>() where T : struct;
+        IMatcher Has<TComponent>() where TComponent : struct;
     }
 }

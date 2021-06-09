@@ -21,7 +21,7 @@
                 }
                 else
                 {
-                    entity.RemoveComponent<TComponent>();
+                    entity.Remove<TComponent>();
                 }
             }
         }

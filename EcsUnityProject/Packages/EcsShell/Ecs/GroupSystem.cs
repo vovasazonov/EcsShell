@@ -9,7 +9,7 @@
             _systems = systems;
         }
 
-        protected void Add<T>(T system) where T : ISystem
+        protected void Add<TSystem>(TSystem system) where TSystem : ISystem
         {
             _systems.Add(system);
         }

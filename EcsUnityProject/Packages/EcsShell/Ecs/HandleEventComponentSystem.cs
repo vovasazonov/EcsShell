@@ -19,9 +19,9 @@ namespace Ecs
         {
             foreach (var entity in _filter.GetEntities())
             {
-                var component = entity.GetComponent<TComponent>();
+                var component = entity.Get<TComponent>();
                 _listenerBuffer.Clear();
-                _listenerBuffer.AddRange(entity.GetComponent<ListenerComponent<TComponent>>().Value);
+                _listenerBuffer.AddRange(entity.Get<ListenerComponent<TComponent>>().Value);
                 foreach (var listener in _listenerBuffer)
                 {
                     listener.OnChanged(entity, component);
