@@ -35,9 +35,8 @@ namespace Ecs.EntitasExtension
 
         protected void Init<T>() where T : struct
         {
-            var type = typeof(ComponentShell<T>);
-            _components.Add(type);
-            object[] attributes = type.GetCustomAttributes(false);
+            _components.Add(typeof(ComponentShell<T>));
+            object[] attributes = typeof(T).GetCustomAttributes(false);
 
             foreach (FrameAttribute attribute in attributes)
             {
