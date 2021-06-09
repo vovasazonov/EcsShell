@@ -38,15 +38,18 @@ namespace Ecs.EntitasExtension
             _components.Add(typeof(ComponentShell<T>));
             object[] attributes = typeof(T).GetCustomAttributes(false);
 
-            foreach (FrameAttribute attribute in attributes)
+            foreach (var attribute in attributes)
             {
-                _frameSystems.Add(world => new HandleFrameComponentSystem<T>(world, attribute.IsDestroyEntity));
-            }
+                if (attribute is FrameAttribute frameAttribute)
+                {
+                    _frameSystems.Add(world => new HandleFrameComponentSystem<T>(world, frameAttribute.IsDestroyEntity));
+                }
 
-            foreach (EventAttribute attribute in attributes)
-            {
-                Init<ListenerComponent<T>>();
-                _eventSystems.Add(world => new HandleEventComponentSystem<T>(world));
+                if (attribute is EventAttribute)
+                {
+                    Init<ListenerComponent<T>>();
+                    _eventSystems.Add(world => new HandleEventComponentSystem<T>(world));
+                }
             }
         }
     }
