@@ -1,6 +1,6 @@
 {
   "name": "com.nroma.ecsshell",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "displayName": "EcsShell",
   "description": "This is an shell for ecs frameworks",
   "unity": "2021.1",
