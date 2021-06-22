@@ -13,8 +13,8 @@ namespace Ecs.EntitasExtension
 
         internal void InitDefaultSystems(IWorld world, ISystems systems)
         {
-            InitFrameSystems(world, systems);
             InitEventSystems(world, systems);
+            InitFrameSystems(world, systems);
         }
 
         private void InitFrameSystems(IWorld world, ISystems systems)
